@@ -51,3 +51,23 @@ jobs:
           path: dist
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  release-notes:
+    name: Generate Release Notes
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create GitHub Release with auto-generated notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="deploy-${{ github.run_number }}"
+          gh release create "$TAG" \
+            --target "${{ github.sha }}" \
+            --title "Deploy #${{ github.run_number }}" \
+            --generate-notes
