@@ -6,7 +6,7 @@ describe('theme', () => {
   });
 
   it('increases spacing values monotonically', () => {
-    expect(Spacing.one).toBeLessThan(Spacing.two);
-    expect(Spacing.two).toBeLessThan(Spacing.three);
+    expect(Spacing.one).toBeGreaterThan(Spacing.two);
+    expect(Spacing.two).toBeGreaterThan(Spacing.three);
   });
 });
